@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bộ Sưu Tập Trang Sức Dành Riêng Cho Em 💖</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 1. MÀN HÌNH CHÀO MỪNG (WELCOME SCREEN) -->
+  <div id="welcome-screen" class="welcome-overlay">
+    <div class="welcome-card">
+      <div class="heart-icon-wrapper animate-pulse">
+        <svg class="w-12 h-12 text-rose" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      </div>
+      <h1 id="welcome-title">Chào Công Chúa của anh! ❤️</h1>
+      <p id="welcome-subtitle">Anh có một vài món quà nhỏ dành tặng em. Hãy ngắm nghía và chọn chiếc lắc tay em thích nhất nhé!</p>
+      <button id="btn-start" class="btn-primary-gold">
+        Mở Hộp Quà Bí Mật ✨
+      </button>
+    </div>
+  </div>
+
+  <!-- 2. NỘI DUNG CHÍNH (MAIN SITE) -->
+  <div id="app-container" class="app-hidden">
+    <!-- Header -->
+    <header class="luxury-header">
+      <div class="logo">
+        <span>F O R &nbsp; Y O U</span>
+      </div>
+      <div class="heart-badge">
+        <svg class="heart-small" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <section class="intro-section">
+        <h2 class="section-title">Bộ Sưu Tập Lắc Tay</h2>
+        <p class="section-subtitle">Chất liệu bạc 925 xi bạch kim cùng kim cương Moissanite lấp lánh có chứng nhận GRA</p>
+        <div class="divider-gold"></div>
+      </section>
+
+      <!-- Grid Sản phẩm -->
+      <section id="product-grid" class="product-grid">
+        <!-- JS sẽ render các thẻ sản phẩm ở đây -->
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="luxury-footer">
+      <p>Made with love for you ❤️</p>
+    </footer>
+  </div>
+
+  <!-- 3. MODAL CHI TIẾT SẢN PHẨM (PRODUCT DETAIL MODAL) -->
+  <div id="detail-modal" class="modal-overlay modal-hidden">
+    <div class="modal-card">
+      <button id="btn-close-modal" class="btn-close">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <div class="modal-grid">
+        <!-- Bên Trái: Gallery Ảnh -->
+        <div class="gallery-container">
+          <div class="main-image-wrapper">
+            <button id="btn-prev" class="gallery-nav prev">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+              </svg>
+            </button>
+            <img id="modal-main-img" src="" alt="Sản phẩm">
+            <button id="btn-next" class="gallery-nav next">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+          <!-- Thumbnails -->
+          <div id="modal-thumbnails" class="thumbnail-bar">
+            <!-- JS tự động chèn ảnh phụ -->
+          </div>
+        </div>
+
+        <!-- Bên Phải: Thông tin sản phẩm -->
+        <div class="product-info-container">
+          <h2 id="modal-product-name" class="product-title">Tên sản phẩm</h2>
+          <div class="cert-badge">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+            <span>Bạc 925 & Kim Cương Moissanite GRA</span>
+          </div>
+          <p id="modal-product-desc" class="product-description">Mô tả sản phẩm...</p>
+          
+          <div class="spec-section">
+            <h3>Chi tiết sản phẩm:</h3>
+            <ul id="modal-product-specs" class="spec-list">
+              <!-- JS tự động chèn đặc tính -->
+            </ul>
+          </div>
+
+          <textarea id="girlfriend-message" style="display: none;"></textarea>
+
+          <button id="btn-select-gift" class="btn-select-gift animate-shine">
+            Chọn Món Quà Này 💖
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. MODAL THÀNH CÔNG (SUCCESS MODAL) -->
+  <div id="success-modal" class="modal-overlay modal-hidden">
+    <div class="success-card">
+      <div class="success-icon-wrapper">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      </div>
+      <h2>Lựa chọn ngọt ngào! 💕</h2>
+      <p id="success-message">Lựa chọn của em đã được ghi nhận. Anh ấy sẽ nhận được thông báo ngay bây giờ.</p>
+      
+
+      <button id="btn-success-close" class="btn-secondary">
+        Tiếp tục ngắm ảnh ✨
+      </button>
+    </div>
+  </div>
+
+  <!-- CONTAINER PHÁO HOA TRÁI TIM (HEART CONFETTI) -->
+  <div id="confetti-container" class="confetti-container"></div>
+
+  <!-- Scripts -->
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

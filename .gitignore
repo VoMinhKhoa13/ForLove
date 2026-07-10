@@ -1,0 +1,18 @@
+# Loại bỏ file cấu hình chứa API Keys nhạy cảm
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Loại bỏ các file công cụ chạy thử cục bộ
+server.js
+extracted_products.json
+
+# Hệ điều hành & Logs
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+.system_generated/
+.gemini/
