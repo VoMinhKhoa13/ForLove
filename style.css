@@ -520,7 +520,8 @@ body {
   .gallery-container {
     border-bottom-left-radius: 0px;
     border-top-right-radius: 20px;
-    padding: 20px;
+    padding: 20px 20px 5px 20px; /* Thu hẹp padding bottom để nối liền với mô tả */
+    background-color: var(--white); /* Nền trắng liền mạch */
   }
 }
 
