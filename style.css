@@ -497,11 +497,14 @@ body {
   .modal-grid {
     grid-template-columns: 1fr;
     min-height: auto;
+    min-width: 0; /* Ngăn chặn Grid tự giãn rộng */
   }
   .modal-card {
+    width: 100%;
     max-height: none;
     overflow-y: visible;
     margin: 20px auto;
+    min-width: 0; /* Ngăn chặn Modal tự giãn rộng */
   }
 }
 
@@ -522,6 +525,7 @@ body {
     border-top-right-radius: 20px;
     padding: 20px 20px 5px 20px; /* Thu hẹp padding bottom để nối liền với mô tả */
     background-color: var(--white); /* Nền trắng liền mạch */
+    min-width: 0; /* Ngăn chặn con thumbnail-bar đẩy giãn */
   }
 }
 
@@ -593,6 +597,8 @@ body {
   overflow-x: auto;
   padding: 5px 0;
   scrollbar-width: none; /* Firefox */
+  width: 100%;
+  min-width: 0; /* Ngăn chặn tự động giãn rộng */
 }
 
 .thumbnail-bar::-webkit-scrollbar {
