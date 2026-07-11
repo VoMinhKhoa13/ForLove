@@ -150,6 +150,34 @@ function registerEvents() {
       successModal.classList.remove("active");
     }
   });
+
+  // --- CHỨC NĂNG PHÓNG TO ẢNH (LIGHTBOX IMAGE ZOOM) ---
+  const lightboxModal = document.getElementById("lightbox-modal");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const lightboxClose = document.querySelector(".lightbox-close");
+  const modalMainImg = document.getElementById("modal-main-img");
+
+  // Bấm vào ảnh chính của sản phẩm trong modal để phóng to
+  if (modalMainImg && lightboxModal && lightboxImg) {
+    modalMainImg.addEventListener("click", () => {
+      if (modalMainImg.src) {
+        lightboxImg.src = modalMainImg.src;
+        lightboxModal.classList.remove("lightbox-hidden");
+        lightboxModal.classList.add("active");
+      }
+    });
+
+    // Bấm nút đóng hoặc click bất kỳ đâu trên vùng đen/ảnh để đóng lightbox
+    if (lightboxClose) {
+      lightboxClose.addEventListener("click", closeLightbox);
+    }
+    lightboxModal.addEventListener("click", closeLightbox);
+  }
+
+  function closeLightbox() {
+    lightboxModal.classList.add("lightbox-hidden");
+    lightboxModal.classList.remove("active");
+  }
 }
 
 // 4. MỞ MODAL CHI TIẾT SẢN PHẨM
