@@ -297,6 +297,62 @@ const CONFIG = {
         "Kiểm định: Chứng thư GRA đi kèm",
         "Tạo hình: Đóa hoa nở rộ đính đá siêu tinh xảo"
       ]
+    },
+    {
+      id: "sp16",
+      name: "TNJ Tennis LTN0416",
+      fullName: "Lắc tay bạc nữ tennis nhỏ xinh đính đá 3ly sang trọng LTN0416 - Trang Sức TNJ",
+      description: "Mẫu lắc tay tennis cổ điển với các viên đá 3 Ly xếp liền kề chạy dọc toàn bộ chiều dài của dây. Thiết kế thanh lịch, lấp lánh rực rỡ mang đến phong cách thời thượng, quý phái cho nàng trong mọi sự kiện.",
+      images: [
+        "sp16/vn-11134207-7ra0g-m9mrgq2etyteb9.webp",
+        "sp16/vn-11134207-7ra0g-m9mrgq2evddud4.webp",
+        "sp16/vn-11134207-7ra0g-m9mrgqh48g3mb1.webp",
+        "sp16/vn-11134207-820l4-mgt82aget8ujfe.webp"
+      ],
+      specs: [
+        "Chất liệu: Bạc cao cấp 925 sáng bóng",
+        "Loại đá: Đá đính toàn bộ dây kích thước 3 Ly",
+        "Kiểu dáng: Dây lắc tennis cổ điển lấp lánh",
+        "Mã sản phẩm: LTN0416"
+      ]
+    },
+    {
+      id: "sp17",
+      name: "TNJ Twist LTN0281",
+      fullName: "Lắc tay nữ bạc thật đơn giản dạng xoắn đẹp LTN0281 - Trang Sức TNJ",
+      description: "Mẫu lắc tay bạc thật với thiết kế dạng xoắn thừng mảnh mai, tinh tế. Phong cách tối giản cuốn hút, mang nét đẹp cổ điển pha lẫn hiện đại, dễ dàng kết hợp với mọi trang phục hàng ngày của cô gái.",
+      images: [
+        "sp17/00d192557f4e93b6acf38939582b3a90.webp",
+        "sp17/84ae1e2223e0d05d0f5ed6c938dacaad.webp",
+        "sp17/c8ba495ceb356f9bb5769c4030ed6a7c.webp",
+        "sp17/ccb28e9eaa94596a8feebebe9c34248c.webp"
+      ],
+      specs: [
+        "Chất liệu: Bạc Sterling 925 nguyên chất",
+        "Thiết kế: Dạng xoắn mảnh thắt thừng tinh xảo",
+        "Mã sản phẩm: LTN0281",
+        "Đặc tính: Tốt cho sức khỏe, kháng khuẩn, cản gió tốt"
+      ]
+    },
+    {
+      id: "sp18",
+      name: "TNJ Beads LTN0231",
+      fullName: "Lắc tay nữ bi bạc nhỏ đẹp dễ thương LTN0231 Trang Sức TNJ",
+      description: "Thiết kế lắc tay kết hợp các hạt bi bạc nhỏ tròn xoe đan xen tạo cảm giác cực kỳ dễ thương và trẻ trung. Món trang sức nhỏ nhắn thích hợp cho bạn gái đeo mỗi ngày, tôn lên vẻ nữ tính, đáng yêu của nàng.",
+      images: [
+        "sp18/27e9894625af7f2abb7a6987f0b485b8.webp",
+        "sp18/3892735cb64395f7d3ff3f606a273acc.webp",
+        "sp18/4b956f6493f3d035296c828b1027ee2c.webp",
+        "sp18/ba50574a1cbef8cda6d6d15da7c1597a.webp",
+        "sp18/c2e9e439d241d2f567980b8656caba65.webp",
+        "sp18/d80b29d33b782e7165989471c4bac5ad.webp"
+      ],
+      specs: [
+        "Chất liệu: Bạc ta 925 cao cấp",
+        "Thiết kế: Chuỗi hạt bi bạc nhỏ tinh tế, trẻ trung",
+        "Mã sản phẩm: LTN0231",
+        "Đặc tính: Bạc ta nguyên chất tốt cho sức khỏe"
+      ]
     }
   ]
 };

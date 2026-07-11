@@ -50,7 +50,7 @@ Vì trang web được viết bằng HTML/CSS/JS thuần, bạn hoàn toàn có 
 
 ### Bước 1: Đưa thư mục code lên GitHub
 1. Truy cập [github.com](https://github.com) và tạo một Repository (kho chứa) mới dạng **Private** (Riêng tư) để giữ bí mật thông tin của bạn.
-2. Tải toàn bộ thư mục `webtrangsuc` này lên Repository vừa tạo (gồm các file `index.html`, `style.css`, `app.js`, `config.js`, `vercel.json` và toàn bộ các thư mục ảnh `sp1` đến `sp15`).
+2. Tải toàn bộ thư mục `webtrangsuc` này lên Repository vừa tạo (gồm các file `index.html`, `style.css`, `app.js`, `config.js`, `vercel.json` và toàn bộ các thư mục ảnh `sp1` đến `sp18`).
 
 ### Bước 2: Liên kết và Deploy trên Vercel
 1. Truy cập trang chủ [vercel.com](https://vercel.com) và đăng nhập bằng tài khoản GitHub của bạn.
