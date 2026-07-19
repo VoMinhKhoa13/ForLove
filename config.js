@@ -353,6 +353,27 @@ const CONFIG = {
         "Mã sản phẩm: LTN0231",
         "Đặc tính: Bạc ta nguyên chất tốt cho sức khỏe"
       ]
+    },
+    {
+      id: "sp19",
+      name: "Pandora Heart 590719",
+      fullName: "Vòng Tay Pandora Moments Bạc Dây Rắn Khóa Trái Tim 590719",
+      description: "Mẫu vòng tay dây rắn Moments kinh điển từ thương hiệu nổi tiếng Pandora với chất liệu bạc Sterling cao cấp. Điểm nhấn là khóa chốt hình trái tim lãng mạn, tinh xảo. Đây là chiếc vòng tay tuyệt vời để lưu giữ những viên charm kỷ niệm đong đầy yêu thương.",
+      images: [
+        "sp19/sg-11134201-824g3-mpv4sb1yty4gd6.webp",
+        "sp19/vn-11134207-81ztc-mlrkmjoac5c4e0.webp",
+        "sp19/vn-11134207-81ztc-mnwlstk07ldva0.webp",
+        "sp19/vn-11134207-820l4-med82lsxhlhdf0.webp",
+        "sp19/vn-11134207-820l4-med8aj08inlw22.webp",
+        "sp19/vn-11134211-81ztc-mlriwse3snb6f9.webp"
+      ],
+      specs: [
+        "Thương hiệu: Pandora (chính hãng)",
+        "Chất liệu: Bạc Sterling 925 cao cấp sáng bóng",
+        "Thiết kế: Dây rắn Moments mềm mại, khóa chốt hình trái tim đính chìm logo",
+        "Mã sản phẩm: 590719",
+        "Phong cách: Sang trọng, quý phái, lưu giữ kỷ niệm"
+      ]
     }
   ]
 };

@@ -456,7 +456,7 @@ function initAntigravityCanvas() {
   // Hàm sinh ra các chấm lấp lánh sắp xếp theo hình trái tim
   function spawnHeartTrail(centerX, centerY) {
     const dotCount = 18; // Số lượng dấu chấm lấp lánh tạo thành 1 trái tim
-    const scale = Math.random() * 1.5 + 1.2; // Kích thước của khung trái tim
+    const scale = Math.random() * 2.0 + 2.0; // Tăng tỷ lệ khung trái tim to rõ hơn (trước là 1.5 + 1.2)
     
     // Tông màu lấp lánh (sparkle) hồng/vàng kim nhẹ
     const sparkleColors = ["#FFA6C9", "#FF5E8E", "#FF8FA3", "#FFD3E8", "#FFF0F5"];
@@ -478,13 +478,13 @@ function initAntigravityCanvas() {
         y: py,
         initialX: px,
         initialY: py,
-        // Hướng bay phân tán nhẹ từ tâm ra
-        vx: (heartX / 16) * (Math.random() * 0.4 + 0.1),
-        vy: (heartY / 13) * (Math.random() * 0.4 + 0.1) - (Math.random() * 0.3 + 0.1), // Xu hướng nổi lên
-        size: Math.random() * 2 + 1, // Kích thước hạt nhỏ dạng "dấu chấm lấp lánh"
+        // Hướng bay phân tán rất chậm từ tâm ra để giữ dáng trái tim lâu hơn (giảm vận tốc đi một nửa)
+        vx: (heartX / 16) * (Math.random() * 0.15 + 0.05),
+        vy: (heartY / 13) * (Math.random() * 0.15 + 0.05) - (Math.random() * 0.15 + 0.05), // Xu hướng nổi lên cực chậm
+        size: Math.random() * 3 + 2, // Tăng kích thước hạt to hơn (trước là 2 + 1)
         color: sparkleColors[Math.floor(Math.random() * sparkleColors.length)],
         alpha: 1.0,
-        decay: Math.random() * 0.02 + 0.015, // Tốc độ mờ đi (khoảng 1 - 1.5 giây)
+        decay: Math.random() * 0.008 + 0.006, // Giảm tốc độ mờ đi giúp hiệu ứng lưu lại lâu hơn (khoảng 2.5 - 3.5 giây)
         sparklePhase: Math.random() * Math.PI * 2 // Lệch pha để nhấp nháy
       });
     }
