@@ -450,16 +450,23 @@ function initAntigravityCanvas() {
     reset() {
       this.x = Math.random() * width;
       this.y = height + Math.random() * 100;
-      this.size = Math.random() * 3.5 + 1.5;
-      this.speedY = -(Math.random() * 0.6 + 0.2); // Tốc độ trôi ngược lên (Chống trọng lực)
-      this.speedX = Math.random() * 0.4 - 0.2;
-      this.color = colors[Math.floor(Math.random() * colors.length)];
-      this.opacity = Math.random() * 0.4 + 0.15;
+      this.size = Math.random() * 10 + 6; // Kích thước trái tim (từ 6px đến 16px)
+      this.speedY = -(Math.random() * 0.5 + 0.15); // Trôi chậm rãi lên trên lãng mạn
+      this.speedX = Math.random() * 0.3 - 0.15;
       
+      // Các tông màu hồng ngọt ngào và lãng mạn
+      const pinks = ["#FFB7C5", "#FF85A1", "#FF5C8A", "#F7A8B8", "#FFC0CB"];
+      this.color = pinks[Math.floor(Math.random() * pinks.length)];
+      this.opacity = Math.random() * 0.35 + 0.15;
+      
+      // Góc xoay của trái tim
+      this.rotation = Math.random() * Math.PI * 2;
+      this.rotationSpeed = Math.random() * 0.01 - 0.005;
+
       // Biến đổi tương tác
       this.vx = 0;
       this.vy = 0;
-      this.friction = 0.95; // Lực ma sát trả lại trạng thái cũ
+      this.friction = 0.95; 
     }
 
     update() {
@@ -470,36 +477,46 @@ function initAntigravityCanvas() {
         const distance = Math.sqrt(dx * dx + dy * dy);
 
         if (distance < mouse.radius) {
-          // Tính lực đẩy ra xa
           const force = (mouse.radius - distance) / mouse.radius;
-          const forceX = (dx / distance) * force * 3;
-          const forceY = (dy / distance) * force * 3;
+          const forceX = (dx / distance) * force * 2;
+          const forceY = (dy / distance) * force * 2;
           
           this.vx += forceX;
           this.vy += forceY;
         }
       }
 
-      // Áp dụng lực cản/ma sát
       this.vx *= this.friction;
       this.vy *= this.friction;
 
-      // Di chuyển hạt
       this.x += this.speedX + this.vx;
       this.y += this.speedY + this.vy;
+      this.rotation += this.rotationSpeed;
 
-      // Nếu đi ra khỏi màn hình, đặt lại ở phía dưới
-      if (this.y < -20 || this.x < -20 || this.x > width + 20) {
+      if (this.y < -30 || this.x < -30 || this.x > width + 30) {
         this.reset();
       }
     }
 
     draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = this.color;
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.rotation);
       ctx.globalAlpha = this.opacity;
+      ctx.fillStyle = this.color;
+      
+      // Vẽ hình trái tim bằng đường cong Bezier
+      ctx.beginPath();
+      const d = this.size;
+      // Dịch chuyển tâm trái tim về điểm xoay (0,0)
+      ctx.moveTo(0, -d / 4);
+      ctx.bezierCurveTo(-d / 2, -d * 0.7, -d, -d / 3, -d, d / 6);
+      ctx.bezierCurveTo(-d, d * 0.6, -d / 3, d * 0.9, 0, d);
+      ctx.bezierCurveTo(d / 3, d * 0.6, d, d * 0.6, d, d / 6);
+      ctx.bezierCurveTo(d, -d / 3, d / 2, -d * 0.7, 0, -d / 4);
+      ctx.closePath();
       ctx.fill();
+      ctx.restore();
     }
   }
 
