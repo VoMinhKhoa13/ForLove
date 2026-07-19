@@ -426,14 +426,75 @@ function initAntigravityCanvas() {
   // Trạng thái chuột toàn cục
   const mouse = { x: null, y: null, radius: 130 };
 
+  // Danh sách các hạt chấm lấp lánh tạo thành trái tim đi theo trỏ chuột
+  const trailParticles = [];
+  let lastMouseX = null;
+  let lastMouseY = null;
+  let moveDistanceAccumulator = 0;
+
   window.addEventListener("mousemove", (e) => {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
+
+    // Chỉ sinh ra trái tim chấm lấp lánh khi chuột di chuyển một khoảng nhất định (tránh sinh quá dày đặc gây đơ màn hình)
+    if (lastMouseX !== null && lastMouseY !== null) {
+      const dist = Math.sqrt((mouse.x - lastMouseX) ** 2 + (mouse.y - lastMouseY) ** 2);
+      moveDistanceAccumulator += dist;
+      
+      if (moveDistanceAccumulator > 25) { // Cứ di chuyển 25px sinh 1 cụm trái tim lấp lánh
+        spawnHeartTrail(mouse.x, mouse.y);
+        moveDistanceAccumulator = 0;
+      }
+    } else {
+      spawnHeartTrail(mouse.x, mouse.y);
+    }
+    
+    lastMouseX = mouse.x;
+    lastMouseY = mouse.y;
   });
+
+  // Hàm sinh ra các chấm lấp lánh sắp xếp theo hình trái tim
+  function spawnHeartTrail(centerX, centerY) {
+    const dotCount = 18; // Số lượng dấu chấm lấp lánh tạo thành 1 trái tim
+    const scale = Math.random() * 1.5 + 1.2; // Kích thước của khung trái tim
+    
+    // Tông màu lấp lánh (sparkle) hồng/vàng kim nhẹ
+    const sparkleColors = ["#FFA6C9", "#FF5E8E", "#FF8FA3", "#FFD3E8", "#FFF0F5"];
+
+    for (let i = 0; i < dotCount; i++) {
+      // Góc t chạy từ 0 đến 2*PI để vẽ trọn vẹn trái tim
+      const t = (i / dotCount) * Math.PI * 2;
+      
+      // Phương trình toán học tạo hình trái tim (Parametric Heart Equation)
+      const heartX = 16 * Math.pow(Math.sin(t), 3);
+      const heartY = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+
+      // Tính vị trí x, y cụ thể của từng chấm lấp lánh
+      const px = centerX + heartX * scale;
+      const py = centerY + heartY * scale;
+
+      trailParticles.push({
+        x: px,
+        y: py,
+        initialX: px,
+        initialY: py,
+        // Hướng bay phân tán nhẹ từ tâm ra
+        vx: (heartX / 16) * (Math.random() * 0.4 + 0.1),
+        vy: (heartY / 13) * (Math.random() * 0.4 + 0.1) - (Math.random() * 0.3 + 0.1), // Xu hướng nổi lên
+        size: Math.random() * 2 + 1, // Kích thước hạt nhỏ dạng "dấu chấm lấp lánh"
+        color: sparkleColors[Math.floor(Math.random() * sparkleColors.length)],
+        alpha: 1.0,
+        decay: Math.random() * 0.02 + 0.015, // Tốc độ mờ đi (khoảng 1 - 1.5 giây)
+        sparklePhase: Math.random() * Math.PI * 2 // Lệch pha để nhấp nháy
+      });
+    }
+  }
 
   window.addEventListener("mouseleave", () => {
     mouse.x = null;
     mouse.y = null;
+    lastMouseX = null;
+    lastMouseY = null;
   });
 
   window.addEventListener("resize", () => {
@@ -520,7 +581,7 @@ function initAntigravityCanvas() {
     }
   }
 
-  // Khởi tạo danh sách các hạt
+  // Khởi tạo danh sách các hạt trôi nổi
   for (let i = 0; i < particleCount; i++) {
     particles.push(new Particle());
   }
@@ -528,10 +589,42 @@ function initAntigravityCanvas() {
   // Vòng lặp vẽ và cập nhật hạt
   function animate() {
     ctx.clearRect(0, 0, width, height);
+
+    // 1. Cập nhật và vẽ các hạt trái tim nền lơ lửng
     for (let i = 0; i < particles.length; i++) {
       particles[i].update();
       particles[i].draw();
     }
+
+    // 2. Cập nhật và vẽ các hạt chấm lấp lánh (trái tim đi theo chuột)
+    for (let i = trailParticles.length - 1; i >= 0; i--) {
+      const p = trailParticles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.alpha -= p.decay;
+      p.sparklePhase += 0.15; // Hiệu ứng nhấp nháy
+
+      if (p.alpha <= 0) {
+        trailParticles.splice(i, 1); // Xoá hạt đã mờ hẳn
+      } else {
+        ctx.save();
+        ctx.beginPath();
+        // Thay đổi nhẹ kích thước theo thời gian để tạo độ lấp lánh nhấp nháy
+        const sizeOffset = Math.sin(p.sparklePhase) * 0.6;
+        const currentSize = Math.max(0.5, p.size + sizeOffset);
+        
+        ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
+        
+        // Vẽ vầng sáng nhạt cho hạt lấp lánh
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = p.color;
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
     requestAnimationFrame(animate);
   }
   
