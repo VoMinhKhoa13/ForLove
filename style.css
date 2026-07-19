@@ -1218,3 +1218,57 @@ body {
   }
 }
 
+/* --- HIỆU ỨNG TƯƠNG TÁC ĐỘNG CAO CẤP KIỂU ANTIGRAVITY --- */
+
+/* Canvas nền động chống trọng lực */
+#antigravity-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Nằm hoàn toàn dưới nền trang web */
+  pointer-events: none; /* Không cản trở click chuột */
+  opacity: 0.85;
+}
+
+/* Đèn dạ quang nhẹ bám theo con trỏ (chỉ chạy trên máy tính) */
+#cursor-glow {
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(183, 110, 121, 0.08) 0%, rgba(214, 175, 55, 0.03) 50%, rgba(0, 0, 0, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: left, top;
+}
+
+/* 3D perspective cho phần chứa sản phẩm */
+#product-grid {
+  perspective: 1000px;
+}
+
+/* Hiệu ứng trôi nổi 3D và đổ bóng cho card sản phẩm */
+.product-card {
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow;
+  transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+}
+
+/* Lớp xuất hiện cuộn trang mượt mà */
+.fade-in-reveal {
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fade-in-reveal.reveal-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+

@@ -394,3 +394,241 @@ function triggerHeartConfetti() {
     container.innerHTML = "";
   }, 6500);
 }
+
+// =========================================================================
+// --- HỆ THỐNG HIỆU ỨNG TƯƠNG TÁC ĐỘNG CAO CẤP KIỂU ANTIGRAVITY ---
+// =========================================================================
+
+// Thêm lệnh gọi khởi tạo vào DOMContentLoaded ở đầu app.js
+setTimeout(() => {
+  initAntigravityCanvas();
+  initCursorGlow();
+  initCard3DTilt();
+  initScrollReveal();
+}, 200);
+
+/**
+ * 1. Nền hạt nổi chống trọng lực tương tác (Antigravity Canvas Particles)
+ * Các hạt tròn/tim trôi nhẹ lên trên, khi đưa chuột vào gần sẽ bị lực đẩy (repulsion) đẩy dạt ra
+ */
+function initAntigravityCanvas() {
+  const canvas = document.getElementById("antigravity-canvas");
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+  let width = (canvas.width = window.innerWidth);
+  let height = (canvas.height = window.innerHeight);
+
+  const particles = [];
+  const particleCount = Math.min(40, Math.floor(width / 35)); // Điều chỉnh mật độ hạt theo màn hình
+  const colors = ["#B76E79", "#E0B0B6", "#D4AF37", "#F7EAEB"];
+  
+  // Trạng thái chuột toàn cục
+  const mouse = { x: null, y: null, radius: 130 };
+
+  window.addEventListener("mousemove", (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+
+  window.addEventListener("mouseleave", () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
+
+  window.addEventListener("resize", () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+
+  class Particle {
+    constructor() {
+      this.reset();
+      this.y = Math.random() * height; // Khởi tạo ngẫu nhiên trên toàn màn hình lúc đầu
+    }
+
+    reset() {
+      this.x = Math.random() * width;
+      this.y = height + Math.random() * 100;
+      this.size = Math.random() * 3.5 + 1.5;
+      this.speedY = -(Math.random() * 0.6 + 0.2); // Tốc độ trôi ngược lên (Chống trọng lực)
+      this.speedX = Math.random() * 0.4 - 0.2;
+      this.color = colors[Math.floor(Math.random() * colors.length)];
+      this.opacity = Math.random() * 0.4 + 0.15;
+      
+      // Biến đổi tương tác
+      this.vx = 0;
+      this.vy = 0;
+      this.friction = 0.95; // Lực ma sát trả lại trạng thái cũ
+    }
+
+    update() {
+      // 1. Tương tác chống trọng lực khi chuột ở gần
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = this.x - mouse.x;
+        const dy = this.y - mouse.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < mouse.radius) {
+          // Tính lực đẩy ra xa
+          const force = (mouse.radius - distance) / mouse.radius;
+          const forceX = (dx / distance) * force * 3;
+          const forceY = (dy / distance) * force * 3;
+          
+          this.vx += forceX;
+          this.vy += forceY;
+        }
+      }
+
+      // Áp dụng lực cản/ma sát
+      this.vx *= this.friction;
+      this.vy *= this.friction;
+
+      // Di chuyển hạt
+      this.x += this.speedX + this.vx;
+      this.y += this.speedY + this.vy;
+
+      // Nếu đi ra khỏi màn hình, đặt lại ở phía dưới
+      if (this.y < -20 || this.x < -20 || this.x > width + 20) {
+        this.reset();
+      }
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.globalAlpha = this.opacity;
+      ctx.fill();
+    }
+  }
+
+  // Khởi tạo danh sách các hạt
+  for (let i = 0; i < particleCount; i++) {
+    particles.push(new Particle());
+  }
+
+  // Vòng lặp vẽ và cập nhật hạt
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+    for (let i = 0; i < particles.length; i++) {
+      particles[i].update();
+      particles[i].draw();
+    }
+    requestAnimationFrame(animate);
+  }
+  
+  animate();
+}
+
+/**
+ * 2. Đèn dạ quang rọi sau con trỏ chuột (Cursor Ambient Glow)
+ * Tạo độ sâu sang trọng, phản chiếu hiệu ứng phát sáng nhẹ sau các thẻ sản phẩm khi rê chuột
+ */
+function initCursorGlow() {
+  const glow = document.getElementById("cursor-glow");
+  if (!glow) return;
+
+  // Chỉ kích hoạt trên các thiết bị có chuột (không kích hoạt trên thiết bị cảm ứng)
+  if (window.matchMedia("(pointer: coarse)").matches) {
+    glow.style.display = "none";
+    return;
+  }
+
+  document.addEventListener("mousemove", (e) => {
+    // Kích hoạt hiển thị khi rê chuột
+    glow.style.opacity = "1";
+    
+    // Sử dụng requestAnimationFrame để di chuyển mượt mà
+    window.requestAnimationFrame(() => {
+      glow.style.left = `${e.clientX}px`;
+      glow.style.top = `${e.clientY}px`;
+    });
+  });
+
+  document.addEventListener("mouseleave", () => {
+    glow.style.opacity = "0";
+  });
+}
+
+/**
+ * 3. Hiệu ứng xoay 3D theo con trỏ chuột (3D Card Tilt Effect)
+ * Khi di chuột trên card sản phẩm, card sẽ xoay nghiêng nhẹ 3D theo góc nhìn
+ */
+function initCard3DTilt() {
+  // Chỉ áp dụng trên máy tính để tránh giật lag khi cuộn trang trên điện thoại
+  if (window.matchMedia("(pointer: coarse)").matches) return;
+
+  // Lắng nghe sự kiện của lưới sản phẩm và ủy quyền cho thẻ con
+  const grid = document.getElementById("product-grid");
+  if (!grid) return;
+
+  // Hàm áp dụng hiệu ứng nghiêng
+  function handleMove(e) {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    
+    // Tính tọa độ chuột tương đối bên trong thẻ card (từ -0.5 đến 0.5)
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    
+    // Giới hạn góc nghiêng tối đa là 12 độ
+    const tiltX = -y * 18;
+    const tiltY = x * 18;
+    
+    card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
+    card.style.boxShadow = "0 15px 35px rgba(183, 110, 121, 0.2), 0 5px 15px rgba(0, 0, 0, 0.08)";
+  }
+
+  function handleLeave(e) {
+    const card = e.currentTarget;
+    card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+    card.style.boxShadow = "";
+  }
+
+  // Gắn sự kiện động sau khi render danh sách sản phẩm xong
+  const observer = new MutationObserver(() => {
+    const cards = grid.querySelectorAll(".product-card");
+    cards.forEach(card => {
+      card.removeEventListener("mousemove", handleMove);
+      card.removeEventListener("mouseleave", handleLeave);
+      card.addEventListener("mousemove", handleMove);
+      card.addEventListener("mouseleave", handleLeave);
+    });
+  });
+
+  observer.observe(grid, { childList: true });
+}
+
+/**
+ * 4. Hiệu ứng cuộn trang lộ diện (Scroll-Driven Fade-in Reveal)
+ * Các thẻ sản phẩm xuất hiện mượt mà bằng cách trượt nhẹ từ dưới lên khi cuộn đến nơi
+ */
+function initScrollReveal() {
+  const grid = document.getElementById("product-grid");
+  if (!grid) return;
+
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("reveal-active");
+        observer.unobserve(entry.target); // Đã xuất hiện rồi thì không observe nữa
+      }
+    });
+  }, {
+    root: null,
+    threshold: 0.05, // Bắt đầu xuất hiện khi 5% thẻ card lọt vào màn hình
+    rootMargin: "0px 0px -40px 0px" // Kích hoạt sớm hơn 40px trước khi nhìn thấy hoàn toàn
+  });
+
+  const mutationObserver = new MutationObserver(() => {
+    const cards = grid.querySelectorAll(".product-card");
+    cards.forEach(card => {
+      card.classList.add("fade-in-reveal");
+      revealObserver.observe(card);
+    });
+  });
+
+  mutationObserver.observe(grid, { childList: true });
+}
+
